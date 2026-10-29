@@ -17,12 +17,9 @@
 
 ## Capacity estimate for 1 million users
 
-These are planning assumptions, not measured traffic:
-- 1,000,000 registered users.
-- 10% daily active users = 100,000 users/day.
-- Each active user performs 20 reads and 2 writes per day.
-- Traffic is spread across 10 active hours; peak traffic is estimated at 5 times the average.
-- Average stored note data is 2 KB per note, with 20 notes per user, excluding indexes, replicas and backups.
+
+- **One-year storage projection:** Starting with 1 million users and 40 GB of raw note content, assume the user base grows by 10% each month and each user retains the same average amount of note data. After 12 monthly growth periods, estimated raw note storage is 40 GB × 1.1^12 ≈ 125 GB. This is a projection of the total storage needed at the end of the period, not the sum of each month's storage. It excludes indexes, metadata, replicas, logs and backups and should be validated against real measurements.
+
 
 Calculations:
 - Reads/day = 100,000 × 20 = 2,000,000.
@@ -88,3 +85,4 @@ flowchart TD
 
 ## Avoiding single points of failure
 Run at least two application servers across separate failure zones behind a health-checking load balancer. Use a highly available managed database configuration with automated failover, backups and a tested restore plan. Deploy cache and queue services in replicated/managed configurations. Monitor health, latency, queue depth, replication lag and error rates, and document incident response steps.
+
