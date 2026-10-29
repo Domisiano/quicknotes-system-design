@@ -45,3 +45,22 @@ The application was manually tested in a web browser.
 | Network error handling | An error message is displayed when the request fails | Passed |
 
 Note: JSONPlaceholder simulates write operations. Created and deleted notes are not permanently stored by the demo API.
+
+## Scope and limitations
+
+### Included in this project
+- A browser-based client for loading, creating and deleting demo notes.
+- REST API endpoint specifications, validation rules and error handling conventions.
+- A relational data model with SQL schema definitions, constraints, indexes and example queries.
+- A proposed scalable architecture with capacity estimates, request flows and design trade-offs.
+
+### Limitations
+- The browser client uses JSONPlaceholder rather than a custom backend.
+- Authentication, authorization and database operations are documented as design requirements; they are not implemented as production services in this repository.
+- The architecture and capacity figures are design estimates, not results from a production load test.
+
+### Possible next steps
+1. Build a real backend that implements the documented REST API.
+2. Connect the backend to PostgreSQL and enforce user ownership.
+3. Add automated tests for API validation, database operations and authorization.
+4. Deploy the complete application and conduct load and security testing.
