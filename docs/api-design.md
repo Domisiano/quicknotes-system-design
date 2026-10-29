@@ -106,3 +106,28 @@ Example error body:
 - Validate input on the server even when the browser also validates it.
 - Use pagination to avoid returning an unbounded list.
 - Never expose stack traces or secrets in client-facing error messages.
+
+
+## Validation, security and pagination rules
+
+### Note validation
+- `title` is required, must not be blank after trimming whitespace, and must contain no more than 100 characters.
+- `body` is optional and should have a documented maximum length enforced by the server.
+- `tagIds`, when supplied, must contain valid tag IDs belonging to the authenticated user.
+- Invalid input returns `400 Bad Request` with a structured error response.
+
+### Authentication and authorization
+- Protected endpoints require a valid bearer access token.
+- Missing or invalid authentication returns `401 Unauthorized`.
+- An authenticated user attempting an operation they are not permitted to perform receives `403 Forbidden`, where appropriate.
+- Users must only access notes and tags they own. The server must enforce ownership on every read, update and delete operation.
+- All API traffic must use HTTPS.
+
+### Pagination rules
+- `page` is a positive integer, starting at `1`.
+- `limit` is a positive integer with a default of `10` and a maximum of `100`.
+- Invalid pagination parameters return `400 Bad Request`.
+- The response includes pagination metadata so clients can determine whether more results are available.
+
+### Consistent error handling
+Every error response should include a stable error code and a readable message. Validation errors may include field-level details. Responses must not expose passwords, access tokens, database credentials or internal stack traces.
