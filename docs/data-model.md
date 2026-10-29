@@ -114,3 +114,23 @@ ORDER BY note_count DESC;
 
 ## SQL or NoSQL?
 I would choose a relational SQL database such as PostgreSQL for the first production version. Users, notes, tags and the join table have clear relationships, and foreign keys help preserve data integrity. Transactions also make related changes safer. A document database could be useful if note data later becomes highly variable, but it would add complexity without a clear benefit for this initial model.
+
+## Data integrity and performance considerations
+
+### Constraints and integrity
+- `users.email` must be unique so two accounts cannot register with the same email address.
+- `notes.title` is required and limited to 100 characters. Application validation should also reject titles containing only whitespace.
+- `notes.user_id` references `users.id`, ensuring every note belongs to an existing user.
+- `tags` uses `UNIQUE (user_id, name)` to prevent a user from creating duplicate tag names.
+- `note_tags` uses a composite primary key `(note_id, tag_id)` to prevent the same tag from being assigned to the same note more than once.
+- `ON DELETE CASCADE` removes dependent notes, tags, and note-tag associations when their parent records are deleted. Production deletion policies should be chosen carefully to prevent unintended data loss.
+
+### Indexing strategy
+- The primary keys support efficient lookups by record ID.
+- The unique index on `users.email` supports account lookups and enforces uniqueness.
+- The index `idx_notes_user_created (user_id, created_at DESC)` supports queries that retrieve a user's newest notes.
+- The unique constraint on `(user_id, name)` supports tag-name lookups within a user's account.
+- Additional indexes should be introduced only when query patterns and performance measurements justify their storage and write overhead.
+
+### Transaction example
+When assigning a tag to a note, the application should verify that both records belong to the authenticated user and insert the association within a transaction where appropriate. If the operation fails, the transaction should roll back so the database does not retain a partial change.
