@@ -30,3 +30,18 @@ The client uses the public JSONPlaceholder demo API at `https://jsonplaceholder.
 - User-provided note text is rendered with `textContent`, not injected as HTML.
 - Buttons are disabled during requests to reduce duplicate actions.
 - The architecture document labels traffic and storage figures as estimates.
+
+
+## Testing
+
+The application was manually tested in a web browser.
+
+| Test | Expected result | Result |
+|---|---|---|
+| Load notes | Up to 10 notes are displayed | Passed |
+| Create a note | The new note appears in the list | Passed |
+| Delete a note | The selected note disappears from the list | Passed |
+| Empty title validation | The form rejects an empty title | Passed |
+| Network error handling | An error message is displayed when the request fails | Passed |
+
+Note: JSONPlaceholder simulates write operations. Created and deleted notes are not permanently stored by the demo API.
