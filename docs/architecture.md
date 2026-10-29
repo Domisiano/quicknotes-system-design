@@ -27,7 +27,6 @@ Calculations:
 - Average reads/second over 10 hours = 2,000,000 ÷ 36,000 ≈ 56; estimated peak ≈ 278 reads/second.
 - Average writes/second over 10 hours = 200,000 ÷ 36,000 ≈ 6; estimated peak ≈ 28 writes/second.
 - Current note storage = 1,000,000 × 20 × 2 KB ≈ 40 GB raw note content.
-- For a simple one-year growth model, assume the user base grows by 10% monthly. Estimated raw note content for each month, summed over 12 months, is roughly 40 GB × (1 + 1.1 + ... + 1.1^11) ≈ 765 GB. This excludes indexes, metadata, replicas, logs and backups and should be validated against real measurements.
 
 ## Architecture diagram
 
